@@ -1,0 +1,14 @@
+{% extends 'base/main.html' %}
+{% block content %}
+
+
+<form method='post'>
+
+    {% csrf_token %}
+    <p>Are You Sure You Want To Remove This Task? <br><br> "{{ task|title }}"</p>
+    <input type='submit' value='Delete'/>&emsp;
+    <a href='{% url 'tasks' %}'>keep task</a>
+
+</form>
+{% endblock %}
+<!--52:47 video time-->

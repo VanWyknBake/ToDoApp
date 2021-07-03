@@ -1,0 +1,12 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+<h4 class='task-wrapper'style='margin-top:1px;'>Task : </h4><h3>{{task|title}} </h3>
+
+<h4 class='task-wrapper'>Description :</h4> <p>{{task.description|title}} </p><br>
+<h4 class='task-wrapper'>Complete :</h4><p>{{ task.complete|title }}</p>
+<hr>
+<a href="{% url 'tasks' %}">Back</a> 
+
+
+{% endblock %}

@@ -1,0 +1,96 @@
+
+{% extends 'base/main.html' %}
+{% block content %}
+
+<div class="header-bar">
+    <div>
+        <h1><i class="fa fa-user" style="font-size:30px;"></i>&nbsp;&nbsp;{{ request.user|upper }}</h1>
+        <h3 style='margin:0;'>You have <b>{{count}}</b>  incomplete task{{count|pluralize:"s"}}!</h3>
+    </div>
+</div>
+
+{% if request.user.is_authenticated %}
+
+    <br>
+    <a href='{% url 'logout' %}'>Logout</a>
+
+{% else %}
+    
+    <a href='{% url 'login' %}'>Log In</a>
+
+{% endif %}
+
+
+<hr>
+<h1 style="font-family: 'Poiret One', cursive;">VW To Do List</h1>
+
+<form method="GET">
+    <input type="text" name='search-area' value='{{ search_input }}'>
+    <input type="submit" value='Search'>
+    {% if search_input %}
+    <br>
+    <br>
+    <a href="{% url 'tasks' %}">Back</a>
+    
+    {%endif%}
+    
+    
+
+</form>
+<br>
+<div class='tooltip'>
+<a class='add' href='{% url 'create-task' %} '><i class="fa fa-clipboard" style="font-size:40px;"></i></a>
+<span class="tooltiptext">Add Task
+</span>
+</div>
+<br>
+<div class="task-item-wrapper">
+
+    {%for task in tasks %}
+
+        <div class="task-wrapper">
+            {% if task.complete %}
+                <div class="task-title">
+                    <div class="task-complete-icon"></div>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <i><s> {{task}}</s></i>
+                </div>
+                <div class="tooltip"><a class="delete-link" href="{% url 'task-delete' task.id %}"><i class="fa fa-trash"></i> </a>&emsp14;&emsp14;
+                    <span class="tooltiptext">Delete
+                </span>
+            </div>
+                <div class="tooltip"><a class="view-link" href="{% url 'task' task.id %}"><i class="fa fa-eye"></i> </a>
+                 
+                    <span class='tooltiptext'>View</span>
+                       
+                 </div>
+                {% else %}
+                <div class="task-title">
+                    <div class="task-incomplete-icon"></div>
+                    <a href='{% url "task" task.id %}'>{{task}}</a>
+                </div>
+                <div class="tooltip"><a class="delete-link" href="{% url 'task-delete' task.id %}"><i class="fa fa-trash"></i>
+                    </a>&emsp14;&emsp14;
+                    <span class="tooltiptext">Delete
+                    </span>
+                </div>
+                <div class='tooltip'><a class="edit-link" href="{% url 'task-update' task.id %}"> <i class="fa fa-pencil"></i></a>
+                <span class="tooltiptext">Edit
+                </span>
+                
+                </div>
+            {% endif %} 
+            
+        </div>
+
+    {% empty %}
+    <h3>No Tasks to Display.</h3>
+    {% endfor %}
+
+
+</div>
+
+
+<br>
+<br>
+
+{% endblock content %}
